@@ -61,13 +61,10 @@ func readLineToSlice(filePath string) (names []string, err error) {
 	defer f.Close()
 	names = make([]string, 0, 64)
 	bf := bufio.NewReader(f)
-	for {
+	for err != io.EOF {
 		var line string
 		line, err = bf.ReadString('\n')
-		if err != nil {
-			if err == io.EOF {
-				err = nil
-			}
+		if err != nil && err != io.EOF {
 			return
 		}
 		line = strings.TrimSpace(line)
@@ -76,6 +73,7 @@ func readLineToSlice(filePath string) (names []string, err error) {
 		}
 		names = append(names, line)
 	}
+	err = nil
 	return
 }
 
