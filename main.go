@@ -30,14 +30,12 @@ func printAbsent(cls string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(names)
 	uniq := sliceToSet(names)
 
 	signs, err := readLineToSlice(getFilePath(cls, "sign.txt"))
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(signs)
 
 	for _, s := range signs {
 		for u := range uniq {
@@ -87,16 +85,6 @@ func sliceToSet(s []string) map[string]bool {
 		m[it] = true
 	}
 	return m
-}
-
-func setToSlice(m map[string]bool) []string {
-	a := make([]string, len(m))
-	i := 0
-	for k := range m {
-		a[i] = k
-		i++
-	}
-	return a
 }
 
 func fmtUniq(m map[string]bool) {
