@@ -38,10 +38,16 @@ func printAbsent(cls string) {
 	}
 
 	for _, s := range signs {
-		for u := range uniq {
+		for u, v := range uniq {
 			if strings.Contains(s, u) {
 				delete(uniq, u)
 				break
+			}
+			for _, it := range v {
+				if strings.Contains(s, it) {
+					delete(uniq, u)
+					break
+				}
 			}
 		}
 	}
@@ -71,21 +77,23 @@ func readLineToSlice(filePath string) (names []string, err error) {
 		if line == "" {
 			continue
 		}
+		line = strings.ReplaceAll(line, " ", "")
 		names = append(names, line)
 	}
 	err = nil
 	return
 }
 
-func sliceToSet(s []string) map[string]bool {
-	m := make(map[string]bool)
+func sliceToSet(s []string) map[string][]string {
+	m := make(map[string][]string)
 	for _, it := range s {
-		m[it] = true
+		a := strings.Split(it, "|")
+		m[a[0]] = a[1:]  // set alias in value if have
 	}
 	return m
 }
 
-func fmtUniq(m map[string]bool) {
+func fmtUniq(m map[string][]string) {
 	for k := range m {
 		fmt.Println(k)
 	}
