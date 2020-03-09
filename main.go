@@ -41,7 +41,6 @@ func printAbsent(cls string) {
 		for u, v := range uniq {
 			if strings.Contains(s, u) {
 				delete(uniq, u)
-				break
 			}
 			for _, it := range v {
 				if strings.Contains(s, it) {
